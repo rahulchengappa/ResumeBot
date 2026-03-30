@@ -1,0 +1,37 @@
+/* IMPORT PREMIUM FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* RESET DEFAULT STYLES */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* REMOVE DEFAULT BUTTON STYLES */
+button {
+  font-family: inherit;
+  outline: none;
+  border: none;
+}
+
+/* REMOVE CRA DEFAULT CENTERING */
+#root {
+  width: 100%;
+}
+
+
+
+/* 🔥 PREVENT HORIZONTAL SCROLL ISSUES */
+html, body {
+  overflow-x: hidden;
+}
+
+/* 🔥 SELECTION COLOR (premium feel) */
+::selection {
+  background: #ff00cc;
+  color: white;
+}
