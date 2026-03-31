@@ -1,135 +1,86 @@
 🚀 ResumeBot – AI-Powered Resume Analyzer
 
-ResumeBot is a full-stack AI-powered web application that analyzes resumes and provides deep, actionable insights to improve ATS compatibility, recruiter appeal, and overall resume quality.
-
-It simulates real-world recruiter evaluation and Applicant Tracking System (ATS) screening to help users optimize their resumes for better shortlisting chances.
+ResumeBot is a high-performance, full-stack web application designed to bridge the gap between job seekers and modern hiring systems. By simulating both Applicant Tracking Systems (ATS) and human recruiter intuition, ResumeBot provides deep, actionable insights to turn a standard CV into a shortlisting machine.
 
 ✨ Key Features
-📊 Resume Scoring-
-Generates an overall Resume Score (0–100)
-Based on clarity, structure, and impact of content
 
-🤖 ATS Analysis-
-Calculates ATS Score
-Simulates how ATS systems scan resumes
-Highlights keyword gaps and formatting issues
+📊 Dynamic Resume Scoring
 
-🔑 Keyword Intelligence-
-Identifies Matched Keywords
-Detects Missing Keywords
-Improves alignment with job requirements
+Generates an overall score (0–100) based on clarity, structure, and content impact.
 
-📈 Section-wise Scoring-
-Breakdown of resume into:
-Skills
-Projects
-Experience
-Each section is scored individually for deeper insights.
+🤖 Advanced ATS Simulation
 
-🧠 Recruiter Insights-
-Predicts recruiter perception
-Highlights strengths and red flags
-Suggests improvements from a hiring perspective
+Calculates an ATS-specific compatibility score.
 
-💡 Smart Suggestions-
-Actionable, non-generic improvements
-Focus on measurable impact and clarity
+Identifies formatting "red flags" that might cause parsing errors.
 
-✍️ AI-Generated Bullet Points-
-Converts weak bullets into high-impact statements
-Uses action verbs + quantified achievements
+🔑 Keyword Intelligence
 
-📊 Deep Analysis
-Includes:
-Strengths & Weaknesses
-Impact Analysis
-ATS Gap Analysis
-Recruiter Perspective
+Extracts matched keywords and detects critical missing terms.
+
+Ensures alignment with industry-standard job requirements.
+
+📈 Granular Section Scoring
+
+Detailed breakdowns for Skills, Projects, and Experience.
+
+🧠 Recruiter Insights
+
+Predicts how a human eye perceives your profile.
+
+Highlights strengths and potential red flags (e.g., employment gaps or vague descriptions).
+
+✍️ AI-Powered Content Enhancement
+
+Smart Suggestions: Non-generic, actionable advice for every section.
+
+Bullet Point Optimizer: Rewrites weak statements into high-impact, quantified achievements using action verbs.
 
 🖥️ Tech Stack
-Frontend-
-React.js
-Axios
-Custom CSS (Glassmorphism + Neon UI)
-SVG-based animated progress rings
 
-Backend-
-Node.js
-Express.js
-Multer (file upload handling)
+Frontend
 
-AI Integration-
-Python(NLP)
-OpenRouter API (OpenAI-compatible models)
-Prompt engineering for structured JSON output
+React.js: For a reactive and modular user interface.
+
+Axios: Handling seamless API requests.
+
+UI/UX: Custom CSS featuring Glassmorphism and Neon UI aesthetics.
+
+Data Viz: SVG-based animated progress rings for real-time score visualization.
+
+Backend
+
+Node.js & Express.js: Robust server-side logic and routing.
+
+Multer: Specialized middleware for handling PDF resume uploads.
+
+AI Integration
+
+Python (NLP): For initial text processing and parsing.
+
+OpenRouter API: Accessing cutting-edge LLMs (OpenAI-compatible).
+
+Prompt Engineering: Fine-tuned to return structured JSON for precise frontend rendering.
 
 ⚙️ How It Works
-User uploads a resume (PDF)
-Backend extracts and processes resume content
-AI model analyzes resume using structured prompts
-Returns:
-Scores
-Insights
-Suggestions
-Improved content
 
-Frontend visualizes results using:
-Animated score rings
-Progress bars
-Insight cards
+Upload: User uploads a PDF resume.
 
-📂 Project Structure
-resumebot/
-│
-├── client/                # React Frontend
-│   ├── src/
-│   │   ├── App.js
-│   │   ├── App.css
-│   │   └── components/
-│   └── public/
-│
-├── server/                # Node.js Backend
-│   ├── routes/
-│   │   └── upload.js
-│   ├── utils/
-│   │   └── ai.js
-│   ├── uploads/
-│   └── server.js
-│
-│──python/
-│  ├──ats.py              #NLP spacey
-│
-├── README.md
-└── .gitignore
+Process: The backend extracts text and sends it to the AI engine.
 
-🚀 Getting Started
-1️⃣ Clone the repository
-git clone https://github.com/rahulchengappa/ResumeBot.git
-cd ResumeBot
-2️⃣ Setup Backend
-cd server
-npm install
+Analyze: The AI evaluates the content against specialized prompts for scoring, ATS gaps, and recruiter perspective.
 
-Create a .env file inside /server:
-
-OPENROUTER_API_KEY=your_api_key_here
-
-Run backend:
-
-node server.js
-3️⃣ Setup Frontend
-cd client
-npm install
-npm start
+Visualize: The frontend renders the structured JSON data into animated score rings, progress bars, and insight cards.
 
 🎯 Use Cases
-Students preparing for placements
-Job seekers optimizing resumes
-Developers exploring AI + full-stack apps
-Anyone wanting ATS-friendly resumes
+
+Students: Preparing for campus placements and internships.
+
+Job Seekers: Optimizing resumes for competitive corporate roles.
+
+Developers: Exploring the integration of AI models within a full-stack environment.
 
 ⚠️ Important Notes
-Backend must be running before frontend
-Requires OpenRouter API key
-Works best with clean, text-based PDF resumes
 
+Dependency: The backend server must be running for the frontend to fetch analysis data.
+API Key: A valid OpenRouter API Key is required for the AI analysis features to function.
