@@ -91,10 +91,10 @@ body {
 
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap; /* 🔥 FIX */
+  flex-wrap: wrap;
 }
 
-/* FILE BUTTON FIX */
+/* FILE BUTTON */
 .file-btn {
   background: rgba(255, 255, 255, 0.1);
   padding: 8px 14px;
@@ -138,30 +138,53 @@ body {
   padding: 20px;
   border-radius: 15px;
   position: relative;
+
+  /*  Glow fix */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(255, 0, 204, 0.35);
+}
+
+/* GLASS */
 .glass {
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px);
+
+   
+  position: relative;
+  z-index: 1;
 }
 
-/* COPY BUTTON FIX */
+/* COPY BUTTON */
 .copy-btn {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(255,255,255,0.1);
+
+  z-index: 999;
+
+  background: rgba(255,255,255,0.12);
   border: none;
-  padding: 6px 8px;
+  padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
+
+  backdrop-filter: blur(8px);
   transition: 0.3s ease;
-  z-index: 5;
 }
 
 .copy-btn:hover {
   background: rgba(255, 0, 204, 0.4);
   transform: scale(1.1);
+}
+
+/*  TICK STATE */
+.copy-btn.copied {
+  background: rgba(0, 255, 150, 0.3);
+  color: #00ffcc;
 }
 
 /* SCORE CARD */
@@ -176,7 +199,6 @@ body {
   position: relative;
   width: 130px;
   height: 130px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,11 +223,11 @@ body {
   z-index: -1;
 }
 
-/* 🔥 FINAL PERFECT CENTER FIX */
+/* CENTER TEXT */
 .score-text,
 .big-text {
   position: absolute;
-  inset: 0; /* 🔥 KEY FIX */
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,12 +243,7 @@ body {
   font-size: 20px;
 }
 
-/* ATS CARD */
-.ats-card {
-  width: 100%;
-}
-
-/* ATS BAR */
+/* ATS */
 .progress-bar {
   width: 100%;
   height: 12px;
@@ -262,7 +279,6 @@ body {
   width: 130px;
   height: 130px;
   margin: 0 auto 10px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,7 +291,6 @@ body {
   display: block;
 }
 
-/* LABEL FIX */
 .mini-card h4 {
   display: flex;
   align-items: center;

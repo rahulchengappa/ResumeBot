@@ -22,10 +22,10 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
       text = data.value;
     }
 
-    // 🔥 AI RESULT (unchanged)
+    //  AI RESULT (unchanged)
     const aiResult = await analyzeResume(text);
 
-    // 🔥 PYTHON ATS RESULT (FIXED)
+    //  PYTHON ATS RESULT (FIXED)
     const pythonProcess = exec(`python ../python/ats.py`, { maxBuffer: 1024 * 500 });
 
     pythonProcess.stdin.write(text);   // ✅ send resume text
@@ -35,7 +35,7 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
       try {
         const atsResult = JSON.parse(data);
 
-        // 🔥 MERGE RESULTS
+        //  MERGE RESULTS
         const finalResult = {
           ...aiResult,
           ...atsResult

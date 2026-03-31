@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 
-/* 🔥 SIMPLE ICONS */
+/* ICONS */
 const Icon = ({ type }) => {
   const icons = {
     resume: "📄",
@@ -29,6 +29,7 @@ function App() {
   const [showHero, setShowHero] = useState(true);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [animatedATS, setAnimatedATS] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const [animatedSections, setAnimatedSections] = useState({
     skills: 0,
@@ -61,12 +62,10 @@ function App() {
         s++;
         setAnimatedScore(s);
       }
-
       if (ats < data.ats_score) {
         ats++;
         setAnimatedATS(ats);
       }
-
       if (s >= data.score && ats >= data.ats_score) {
         clearInterval(interval);
       }
@@ -110,16 +109,10 @@ function App() {
     formData.append("resume", file);
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/upload",
-        formData
-      );
-
+      const res = await axios.post("http://localhost:5000/api/upload", formData);
       const response = res.data;
 
-      const matched = Object.values(
-        response.categorized_keywords || {}
-      ).flat();
+      const matched = Object.values(response.categorized_keywords || {}).flat();
 
       const allKeywords = [
         "python","java","c","c++","javascript","sql","react","node",
@@ -177,17 +170,19 @@ function App() {
     setFile(null);
     setAnimatedScore(0);
     setAnimatedATS(0);
-    setAnimatedSections({
-      skills: 0,
-      projects: 0,
-      experience: 0
-    });
+    setCopied(false);
   };
 
   const handleCopy = () => {
     const text = data.improved_bullets.join("\n");
     navigator.clipboard.writeText(text);
+
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
+
+  const renderList = (arr) =>
+    arr?.length ? arr.map((item, i) => <li key={i}>{item}</li>) : <li>No data available</li>;
 
   return (
     <div className="app-container">
@@ -206,30 +201,25 @@ function App() {
           <div className="upload-box">
             <div className="file-input-wrapper">
               <input
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-              style={{ display: "none" }}
-              id="fileUpload"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                style={{ display: "none" }}
+                id="fileUpload"
               />
-              
+
               <label htmlFor="fileUpload" className="file-btn">
                 Choose File
-                </label>
+              </label>
 
               {file && (
                 <span className="file-name">
                   {file.name}
-                  <button
-                  className="remove-file"
-                  onClick={() => setFile(null)}
-                  >
-                    ✕
-                    </button>
-                    </span>)}
+                  <button className="remove-file" onClick={() => setFile(null)}>✕</button>
+                </span>
+              )}
             </div>
 
             <button onClick={handlePreview}>Preview</button>
-
             <button onClick={handleUpload}>
               {loading ? "Analyzing..." : "Analyze Resume"}
             </button>
@@ -240,15 +230,17 @@ function App() {
       {data && (
         <div className="results fade-in">
 
+          {/* RESUME SCORE */}
           <div className="card glass score-card">
             <div className="score-ring">
               <svg width="110" height="110">
-  <defs>
-    <linearGradient id="grad">
-      <stop offset="0%" stopColor="#ff00cc" />
-      <stop offset="100%" stopColor="#6a00ff" />
-    </linearGradient>
-  </defs>
+                <defs>
+                  <linearGradient id="grad">
+                    <stop offset="0%" stopColor="#ff00cc" />
+                    <stop offset="100%" stopColor="#6a00ff" />
+                  </linearGradient>
+                </defs>
+
                 <circle cx="55" cy="55" r="50" stroke="#2a1a3f" strokeWidth="8" fill="none"/>
                 <circle
                   cx="55"
@@ -262,6 +254,7 @@ function App() {
                   strokeLinecap="round"
                 />
               </svg>
+
               <div className="score-text">{animatedScore}%</div>
             </div>
 
@@ -271,6 +264,7 @@ function App() {
             </div>
           </div>
 
+          {/* ATS */}
           <div className="card glass">
             <h2><Icon type="ats" />ATS Score: {animatedATS}%</h2>
             <div className="progress-bar">
@@ -278,6 +272,7 @@ function App() {
             </div>
           </div>
 
+          {/* SECTIONS */}
           <div className="section-row">
             {["skills", "projects", "experience"].map((key) => (
               <div className="card glass mini-card" key={key}>
@@ -296,62 +291,62 @@ function App() {
                       strokeLinecap="round"
                     />
                   </svg>
-                  <div className="big-text">{animatedSections[key]} %</div>
+
+                  <div className="big-text">{animatedSections[key]}%</div>
                 </div>
-                <h4>
-                  <Icon type={key} />
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </h4>
+
+                <h4><Icon type={key} />{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
               </div>
             ))}
           </div>
 
+          {/* ✅ FIXED KEYWORDS */}
           <div className="card glass">
             <h3><Icon type="keywords" />Keywords Analysis</h3>
 
             <h4>Matched Keywords</h4>
-            <ul>{data.matched_keywords.map((k,i)=><li key={i}>{k}</li>)}</ul>
+            <ul>
+              {data.matched_keywords?.length
+                ? data.matched_keywords.map((k, i) => <li key={i}>{k}</li>)
+                : <li>No matched keywords</li>}
+            </ul>
 
             <h4>Missing Keywords</h4>
-            <ul>{data.missing_keywords.map((k,i)=><li key={i}>{k}</li>)}</ul>
+            <ul>
+              {data.missing_keywords?.length
+                ? data.missing_keywords.map((k, i) => <li key={i}>{k}</li>)
+                : <li>No missing keywords</li>}
+            </ul>
           </div>
 
-          <div className="card glass">
-            <h3><Icon type="strengths" />Strengths</h3>
-            <ul>{data.strengths.map((s,i)=><li key={i}>{s}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <h3><Icon type="weaknesses" />Weaknesses</h3>
-            <ul>{data.weaknesses.map((w,i)=><li key={i}>{w}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <h3><Icon type="impact" />Impact Analysis</h3>
-            <ul>{data.impact_analysis.map((i,idx)=><li key={idx}>{i}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <h3><Icon type="recruiter" />Recruiter Insight</h3>
-            <ul>{data.recruiter_insight.map((r,i)=><li key={i}>{r}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <h3><Icon type="ai" />ATS Analysis</h3>
-            <ul>{data.ats_analysis.map((a,i)=><li key={i}>{a}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <h3><Icon type="suggestion" />Suggestions</h3>
-            <ul>{data.suggestions.map((s,i)=><li key={i}>{s}</li>)}</ul>
-          </div>
-
-          <div className="card glass">
-            <div className="card-header">
-              <h3><Icon type="bullets" />Improved Bullet Points</h3>
-              <button onClick={handleCopy}>📋</button>
+          {/* OTHER CARDS */}
+          {[
+            ["strengths", "Strengths", data.strengths],
+            ["weaknesses", "Weaknesses", data.weaknesses],
+            ["impact", "Impact Analysis", data.impact_analysis],
+            ["recruiter", "Recruiter Insight", data.recruiter_insight],
+            ["ai", "ATS Analysis", data.ats_analysis],
+            ["suggestion", "Suggestions", data.suggestions],
+          ].map(([type, title, arr]) => (
+            <div className="card glass" key={title}>
+              <h3><Icon type={type} />{title}</h3>
+              <ul>{renderList(arr)}</ul>
             </div>
-            <ul>{data.improved_bullets.map((b,i)=><li key={i}>{b}</li>)}</ul>
+          ))}
+
+          {/* BULLETS */}
+          <div className="card glass">
+            <button
+              type="button"
+              className={`copy-btn ${copied ? "copied" : ""}`}
+              onClick={handleCopy}
+            >
+              {copied ? "✔" : "📋"}
+            </button>
+
+            <h3><Icon type="bullets" />Improved Bullet Points</h3>
+
+            <ul>{renderList(data.improved_bullets)}</ul>
           </div>
 
         </div>
